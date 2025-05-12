@@ -20,7 +20,7 @@ namespace HolidaySearch.Core.Application.Services
         public IEnumerable<Flight> Search(SearchRequest request)
         {
             return _flights.Where(f =>
-                request.DepartingFrom.Contains(f.From) &&
+                (request.DepartingFrom == null || !request.DepartingFrom.Any() || request.DepartingFrom.Contains(f.From)) &&
                 f.To == request.TravelingTo &&
                 f.DepartureDate.Date == request.DepartureDate.Date);
         }
