@@ -1,10 +1,6 @@
 ﻿using HolidaySearch.Core.Application.Services;
+using HolidaySearch.Core.Application.Services.Sorting;
 using HolidaySearch.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HolidaySearch.Tests.Services
 {
@@ -15,7 +11,7 @@ namespace HolidaySearch.Tests.Services
         [SetUp]
         public void Setup()
         {
-            _holidaySortService = new HolidaySortService();
+            _holidaySortService = new HolidaySortService(new SortByTotalPrice());
         }
 
         [Test]
@@ -23,9 +19,9 @@ namespace HolidaySearch.Tests.Services
         {
             var holidays = new List<Holiday>
             {
-                new() { Flight = new Flight { Price = 250 }, Hotel = new Hotel { PricePerNight = 100, Nights = 7 } },
+                new() { Flight = new Flight { Price = 250 }, Hotel = new Hotel { PricePerNight = 100, Nights = 7 } }, 
                 new() { Flight = new Flight { Price = 200 }, Hotel = new Hotel { PricePerNight = 75, Nights = 7 } }, 
-                new() { Flight = new Flight { Price = 300 }, Hotel = new Hotel { PricePerNight = 50, Nights = 7 } } 
+                new() { Flight = new Flight { Price = 300 }, Hotel = new Hotel { PricePerNight = 50, Nights = 7 } }   
             };
 
             var result = _holidaySortService.Sort(holidays).ToList();
@@ -41,8 +37,8 @@ namespace HolidaySearch.Tests.Services
         {
             var holidays = new List<Holiday>
             {
-                new() { Flight = new Flight { Price = 200 }, Hotel = new Hotel { PricePerNight = 100, Nights = 5 } }, // Total: 700
-                new() { Flight = new Flight { Price = 250 }, Hotel = new Hotel { PricePerNight = 90, Nights = 5 } }   // Total: 700
+                new() { Flight = new Flight { Price = 200 }, Hotel = new Hotel { PricePerNight = 100, Nights = 5 } }, 
+                new() { Flight = new Flight { Price = 250 }, Hotel = new Hotel { PricePerNight = 90, Nights = 5 } }   
             };
 
             var result = _holidaySortService.Sort(holidays).ToList();
