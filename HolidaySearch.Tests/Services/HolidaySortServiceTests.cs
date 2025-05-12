@@ -35,5 +35,21 @@ namespace HolidaySearch.Tests.Services
             Assert.AreEqual(725, result[1].TotalPrice);
             Assert.AreEqual(950, result[2].TotalPrice);
         }
+
+        [Test]
+        public void PreservesOrderWhenTotalPricesAreEqual()
+        {
+            var holidays = new List<Holiday>
+            {
+                new() { Flight = new Flight { Price = 200 }, Hotel = new Hotel { PricePerNight = 100, Nights = 5 } }, // Total: 700
+                new() { Flight = new Flight { Price = 250 }, Hotel = new Hotel { PricePerNight = 90, Nights = 5 } }   // Total: 700
+            };
+
+            var result = _holidaySortService.Sort(holidays).ToList();
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(700, result[0].TotalPrice);
+            Assert.AreEqual(700, result[1].TotalPrice);
+        }
     }
 }

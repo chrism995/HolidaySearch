@@ -11,7 +11,7 @@ namespace HolidaySearch.Core.Application.Services
     {
         public IEnumerable<Holiday> Sort(IEnumerable<Holiday> holidays)
         {
-            return holidays;
+            return holidays.OrderBy(h => h.TotalPrice);
         }
     }
 }
