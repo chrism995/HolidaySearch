@@ -1,25 +1,23 @@
-﻿using HolidaySearch.Core.Domain.Request;
+﻿using HolidaySearch.Core.Application.Interfaces;
 using HolidaySearch.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HolidaySearch.Core.Domain.Request;
 
 namespace HolidaySearch.Core.Application.Services
 {
-    public class FlightSearchService
+    public class FlightSearchService: IFlightSearchService
     {
-        private readonly IEnumerable<Flight> _flights;
+        private readonly IFlightRepository _flightRepository;
 
-        public FlightSearchService(IEnumerable<Flight> flights)
+        public FlightSearchService(IFlightRepository flightRepository)
         {
-            _flights = flights;
+            _flightRepository = flightRepository;
         }
 
         public IEnumerable<Flight> Search(SearchRequest request)
         {
-            return _flights.Where(f =>
+            var flights = _flightRepository.GetAllFlights();
+
+            return flights.Where(f =>
                 (request.DepartingFrom == null || !request.DepartingFrom.Any() || request.DepartingFrom.Contains(f.From)) &&
                 f.To == request.TravelingTo &&
                 f.DepartureDate.Date == request.DepartureDate.Date);
