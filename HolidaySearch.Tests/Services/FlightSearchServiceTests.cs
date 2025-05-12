@@ -1,25 +1,39 @@
 ﻿using HolidaySearch.Core.Application.Services;
 using HolidaySearch.Core.Domain;
 using HolidaySearch.Core.Domain.Request;
+using HolidaySearch.Core.Application.Interfaces;
+using Moq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HolidaySearch.Tests.Services
 {
     public class FlightSearchServiceTests
     {
+        private Mock<IFlightRepository> _mockFlightRepository;
         private FlightSearchService _flightSearchService;
-        private List<Flight> _mockFlights;
 
         [SetUp]
         public void Setup()
         {
-            _mockFlights = new List<Flight>
+            // Create a mock repository
+            _mockFlightRepository = new Mock<IFlightRepository>();
+
+            // Set up mock data
+            var mockFlights = new List<Flight>
             {
                 new() { Id = 1, From = "MAN", To = "AGP", DepartureDate = new DateTime(2023, 7, 1), Price = 200 },
                 new() { Id = 2, From = "LGW", To = "AGP", DepartureDate = new DateTime(2023, 7, 1), Price = 180 },
                 new() { Id = 3, From = "LTN", To = "PMI", DepartureDate = new DateTime(2023, 6, 15), Price = 150 }
             };
 
-            _flightSearchService = new FlightSearchService(_mockFlights);
+            // Configure the mock to return the mock flights
+            _mockFlightRepository.Setup(repo => repo.GetAllFlights()).Returns(mockFlights);
+
+            // Inject the mock repository into the service
+            _flightSearchService = new FlightSearchService(_mockFlightRepository.Object);
         }
 
         [Test]
