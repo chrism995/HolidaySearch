@@ -13,7 +13,17 @@ namespace HolidaySearch.Core.Application.Services
     {
         public IEnumerable<Holiday> MatchHolidays(IEnumerable<Flight> flights, IEnumerable<Hotel> hotels, SearchRequest request)
         {
-            return new List<Holiday>();
+            return (from flight in flights
+                from hotel in hotels
+                where flight.To == request.TravelingTo &&
+                      hotel.ArrivalDate.Date == request.DepartureDate.Date &&
+                      hotel.Nights == request.Duration &&
+                      hotel.LocalAirports.Contains(flight.To)
+                select new Holiday
+                {
+                    Flight = flight,
+                    Hotel = hotel,
+                }).ToList();
         }
     }
 }
