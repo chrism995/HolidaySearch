@@ -4,6 +4,11 @@ A .NET solution for searching and managing holiday packages.
 **Project Overview**
 HolidaySearch is a solution built with .NET 8.0 that provides functionality for searching and managing holiday packages. The core logic is contained in the HolidaySearch.Core project, with comprehensive unit tests in the HolidaySearch.Tests project.
 
+**Future enhancements**
+- Make the repository methods asynchronous to prevent the UI from being blocked
+- Add input validation to search request
+- Implement a consistent method for error handling and logging throughout the application
+
 **Prerequisites**
 .NET 8.0 SDK
 Visual Studio 2022 or later (recommended) or Visual Studio Code
