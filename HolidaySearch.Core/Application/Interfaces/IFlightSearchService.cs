@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HolidaySearch.Core.Domain.Request;
+using HolidaySearch.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace HolidaySearch.Core.Application.Interfaces
 {
     public interface IFlightSearchService
     {
+        IEnumerable<Flight> Search(SearchRequest request);
     }
 }
