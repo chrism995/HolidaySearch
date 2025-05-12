@@ -1,18 +1,26 @@
 ﻿using HolidaySearch.Core.Application.Services;
 using HolidaySearch.Core.Domain;
 using HolidaySearch.Core.Domain.Request;
+using HolidaySearch.Core.Application.Interfaces;
+using Moq;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HolidaySearch.Tests.Services
 {
     public class HotelSearchServiceTests
     {
+        private Mock<IHotelRepository> _mockHotelRepository;
         private HotelSearchService _hotelSearchService;
-        private List<Hotel> _mockHotels;
 
         [SetUp]
         public void Setup()
         {
-            _mockHotels = new List<Hotel>
+            _mockHotelRepository = new Mock<IHotelRepository>();
+
+            var mockHotels = new List<Hotel>
             {
                 new()
                 {
@@ -43,7 +51,9 @@ namespace HolidaySearch.Tests.Services
                 }
             };
 
-            _hotelSearchService = new HotelSearchService(_mockHotels);
+             _mockHotelRepository.Setup(repo => repo.GetAllHotels()).Returns(mockHotels);
+
+            _hotelSearchService = new HotelSearchService(_mockHotelRepository.Object);
         }
 
         [Test]
@@ -63,7 +73,7 @@ namespace HolidaySearch.Tests.Services
         }
 
         [Test]
-        public void ReturnsNoHotels_WhenNoMatchOnDate()
+        public void ReturnsNoHotelsWhenNoMatchOnDate()
         {
             var request = new SearchRequest
             {
@@ -78,7 +88,7 @@ namespace HolidaySearch.Tests.Services
         }
 
         [Test]
-        public void ReturnsNoHotels_WhenNoMatchOnAirport()
+        public void ReturnsNoHotelsWhenNoMatchOnAirport()
         {
             var request = new SearchRequest
             {
@@ -93,13 +103,13 @@ namespace HolidaySearch.Tests.Services
         }
 
         [Test]
-        public void ReturnsNoHotels_WhenNoMatchOnDuration()
+        public void ReturnsNoHotelsWhenNoMatchOnDuration()
         {
             var request = new SearchRequest
             {
                 DepartureDate = new DateTime(2023, 6, 15),
                 TravelingTo = "PMI",
-                Duration = 7 
+                Duration = 7
             };
 
             var results = _hotelSearchService.Search(request).ToList();

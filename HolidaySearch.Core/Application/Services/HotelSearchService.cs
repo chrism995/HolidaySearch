@@ -11,19 +11,21 @@ namespace HolidaySearch.Core.Application.Services
 {
     public class HotelSearchService: IHotelSearchService
     {
-        private readonly IEnumerable<Hotel> _hotels;
+        private readonly IHotelRepository _hotelRepository;
 
-        public HotelSearchService(IEnumerable<Hotel> hotels)
+        public HotelSearchService(IHotelRepository hotelRepository)
         {
-            _hotels = hotels;
+            _hotelRepository = hotelRepository;
         }
 
         public IEnumerable<Hotel> Search(SearchRequest request)
         {
-            return _hotels.Where(h =>
+            var hotels = _hotelRepository.GetAllHotels();
+
+            return hotels.Where(h =>
+                h.LocalAirports.Contains(request.TravelingTo) &&
                 h.ArrivalDate.Date == request.DepartureDate.Date &&
-                h.Nights == request.Duration &&
-                h.LocalAirports.Contains(request.TravelingTo));
+                h.Nights == request.Duration);
         }
     }
 }
