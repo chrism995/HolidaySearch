@@ -1,7 +1,6 @@
-﻿
-using HolidaySearch.Core.Domain;
+﻿using HolidaySearch.Core.Domain;
 
-namespace HolidaySearch.Core.Application.Interfaces
+namespace HolidaySearch.Core.Application.Interfaces.Repositories
 {
     public interface IFlightRepository
     {

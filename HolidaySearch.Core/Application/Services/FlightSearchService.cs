@@ -1,4 +1,5 @@
 ﻿using HolidaySearch.Core.Application.Interfaces;
+using HolidaySearch.Core.Application.Interfaces.Repositories;
 using HolidaySearch.Core.Domain;
 using HolidaySearch.Core.Domain.Request;
 

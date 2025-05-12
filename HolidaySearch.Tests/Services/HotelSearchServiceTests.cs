@@ -1,12 +1,8 @@
 ﻿using HolidaySearch.Core.Application.Services;
 using HolidaySearch.Core.Domain;
 using HolidaySearch.Core.Domain.Request;
-using HolidaySearch.Core.Application.Interfaces;
 using Moq;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using HolidaySearch.Core.Application.Interfaces.Repositories;
 
 namespace HolidaySearch.Tests.Services
 {

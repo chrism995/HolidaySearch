@@ -1,17 +1,12 @@
 ﻿using System.Text.Json;
-using HolidaySearch.Core.Application.Interfaces;
+using HolidaySearch.Core.Application.Interfaces.Repositories;
 using HolidaySearch.Core.Domain;
 
-namespace HolidaySearch.Data.Repositories
+namespace HolidaySearch.Core.Data.Repositories
 {
-    public class FlightRepository : IFlightRepository
+    public class FlightRepository(string filePath) : IFlightRepository
     {
-        private readonly string _filePath;
-
-        public FlightRepository(string filePath)
-        {
-            _filePath = filePath;
-        }
+        private readonly string _filePath = filePath;
 
         public IEnumerable<Flight> GetAllFlights()
         {

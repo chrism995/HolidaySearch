@@ -1,19 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using HolidaySearch.Core.Application.Interfaces;
+using HolidaySearch.Core.Application.Interfaces.Repositories;
 using HolidaySearch.Core.Domain;
 
-namespace HolidaySearch.Data.Repositories
+namespace HolidaySearch.Core.Data.Repositories
 {
-    public class HotelRepository : IHotelRepository
+    public class HotelRepository(string filePath) : IHotelRepository
     {
-        private readonly string _filePath;
-
-        public HotelRepository(string filePath)
-        {
-            _filePath = filePath;
-        }
+        private readonly string _filePath = filePath;
 
         public IEnumerable<Hotel> GetAllHotels()
         {
