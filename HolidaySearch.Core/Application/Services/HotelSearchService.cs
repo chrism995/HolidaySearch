@@ -20,7 +20,10 @@ namespace HolidaySearch.Core.Application.Services
 
         public IEnumerable<Hotel> Search(SearchRequest request)
         {
-            return Enumerable.Empty<Hotel>();
+            return _hotels.Where(h =>
+                h.ArrivalDate.Date == request.DepartureDate.Date &&
+                h.Nights == request.Duration &&
+                h.LocalAirports.Contains(request.TravelingTo));
         }
     }
 }
